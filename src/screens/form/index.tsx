@@ -4,7 +4,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { z } from 'zod';
-import DynamicForm, { useFormContext } from '@/components/DynamicForm';
+import { DynamicForm, useFormContext } from '@/components/DynamicForm';
 
 // Form alanı bileşeni
 const FormField = ({ 
@@ -89,7 +89,7 @@ const FormExample = () => {
         />
         
         {/* Form durumu bilgilendirmeleri */}
-        <DynamicForm.ErrorInfoBox style={styles.infoBox} />
+        <DynamicForm.ErrorMessageInfoBox style={styles.infoBox} />
         <DynamicForm.SuccessMessageInfoBox style={styles.infoBox} />
         
         {/* Gönderme butonu */}
