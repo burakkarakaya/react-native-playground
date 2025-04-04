@@ -2,12 +2,12 @@
 // Örnek bir form uygulaması
 
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { z } from 'zod';
-import { DynamicForm, useFormContext } from '@/components/DynamicForm';
+import { DynamicForm, FormField, FormCheckbox, FormCheckboxGroup } from '@/components/DynamicForm';
 
 // Form alanı bileşeni
-const FormField = ({ 
+/*const FormField = ({ 
   name,
   label,
   placeholder,
@@ -41,7 +41,7 @@ const FormField = ({
       )}
     </View>
   );
-};
+};*/
 
 // Form şeması
 const formSchema = z.object({
@@ -59,6 +59,14 @@ const FormExample = () => {
     console.error("Form gönderim hatası:", error);
   };
 
+  const interestOptions = [
+    "Teknoloji",
+    "Spor",
+    "Müzik",
+    "Sanat",
+    "Seyahat"
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Kullanıcı Girişi</Text>
@@ -72,7 +80,9 @@ const FormExample = () => {
         successMessage="Giriş başarılı!"
         defaultValues={{
           email: "",
-          password: ""
+          password: "",
+          rememberMe: true,
+          interests: ["Seyahat"]
         }}
       >
         <FormField 
@@ -87,6 +97,18 @@ const FormExample = () => {
           placeholder="Şifrenizi girin" 
           secureTextEntry={true} 
         />
+
+        <FormCheckbox
+          name="rememberMe" 
+          label="Beni Hatırla" 
+        />
+
+        <FormCheckboxGroup
+            name="interests"
+            label="İlgi Alanları"
+            options={interestOptions}
+            required
+          />
         
         {/* Form durumu bilgilendirmeleri */}
         <DynamicForm.ErrorMessageInfoBox style={styles.infoBox} />
