@@ -4,44 +4,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { z } from 'zod';
-import { DynamicForm, FormField, FormCheckbox, FormCheckboxGroup } from '@/components/DynamicForm';
-
-// Form alanı bileşeni
-/*const FormField = ({ 
-  name,
-  label,
-  placeholder,
-  secureTextEntry = false
-}: { 
-  name: string; 
-  label: string; 
-  placeholder?: string;
-  secureTextEntry?: boolean;
-}) => {
-  const { register, setValue, formState: { errors } } = useFormContext();
-
-  // React Hook Form ile entegrasyon
-  React.useEffect(() => {
-    register(name);
-  }, [register, name]);
-
-  return (
-    <View style={styles.fieldContainer}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput
-        style={[styles.input, errors[name] && styles.inputError]}
-        placeholder={placeholder}
-        onChangeText={(text) => setValue(name, text, { shouldValidate: true })}
-        secureTextEntry={secureTextEntry}
-      />
-      {errors[name] && (
-        <Text style={styles.errorText}>
-          {errors[name]?.message?.toString() || "Bu alan gereklidir"}
-        </Text>
-      )}
-    </View>
-  );
-};*/
+import { DynamicForm, FormField, FormCheckbox, FormCheckboxGroup, FormRadioGroup, FormSelect } from '@/components/DynamicForm';
 
 // Form şeması
 const formSchema = z.object({
@@ -67,10 +30,16 @@ const FormExample = () => {
     "Seyahat"
   ];
 
+  const genderOptions = [
+    { label: "Erkek", value: "male" },
+    { label: "Kadın", value: "female" },
+    { label: "Diğer", value: "other" },
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Kullanıcı Girişi</Text>
-      
+
       <DynamicForm
         schema={formSchema}
         endpoint="https://api.example.com/login"
@@ -85,35 +54,80 @@ const FormExample = () => {
           interests: ["Seyahat"]
         }}
       >
-        <FormField 
-          name="email" 
-          label="E-posta Adresi" 
-          placeholder="ornek@mail.com" 
-        />
-        
-        <FormField 
-          name="password" 
-          label="Şifre" 
-          placeholder="Şifrenizi girin" 
-          secureTextEntry={true} 
+
+        {/* Form Field */}
+
+        <FormField
+          name="email"
+          label="E-posta Adresi"
+          placeholder="ornek@mail.com"
         />
 
+        <FormField
+          name="password"
+          label="Şifre"
+          placeholder="Şifrenizi girin"
+          secureTextEntry={true}
+        />
+
+        {/* Form Checkbox */}
         <FormCheckbox
-          name="rememberMe" 
-          label="Beni Hatırla" 
+          name="rememberMe"
+          label="Beni Hatırla"
         />
 
+        {/* Form Checkbox Group */}
         <FormCheckboxGroup
-            name="interests"
-            label="İlgi Alanları"
-            options={interestOptions}
-            required
-          />
-        
+          name="interests"
+          label="İlgi Alanları"
+          options={interestOptions}
+          required
+        />
+
+        {/* Form Radio Group */}
+        <FormRadioGroup
+          name="notification"
+          label="Bildirim Tercihleri"
+          options={["E-posta", "SMS", "Uygulama Bildirimleri"]}
+        />
+
+        {/* Form Select */}
+        <FormSelect
+          name="gender"
+          label="Cinsiyet"
+          options={genderOptions}
+          required
+          dropdownPosition="top"
+        />
+
+        <FormSelect
+          name="interests"
+          label="İlgi Alanları"
+          multiple
+          options={[
+            { label: 'Spor', value: 'sports' },
+            { label: 'Müzik', value: 'music' },
+            { label: 'Sanat', value: 'art' }
+          ]}
+          placeholder="İlgi alanlarınızı seçiniz"
+        />
+
+        <FormSelect
+          name="city"
+          label="Şehir"
+          options={[
+            { label: 'İstanbul', value: '34' },
+            { label: 'Ankara', value: '06' },
+            { label: 'İzmir', value: '35' }
+          ]}
+          search
+          placeholder="Şehir ara..."
+        />
+
         {/* Form durumu bilgilendirmeleri */}
         <DynamicForm.ErrorMessageInfoBox style={styles.infoBox} />
         <DynamicForm.SuccessMessageInfoBox style={styles.infoBox} />
-        
+
         {/* Gönderme butonu */}
         <DynamicForm.Button style={styles.submitButton}>
           Giriş Yap

@@ -5,3 +5,5 @@ export * from './dynamicForm.types';
 export * from './formField.types';
 export * from './formCheckbox.types';
 export * from './formCheckboxGroup.types';
+export * from './formRadioGroup.types';
+export * from './formSelect.types';
